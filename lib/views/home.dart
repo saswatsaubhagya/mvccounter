@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../controllers/counter.dart';
 
@@ -10,7 +11,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  CounterController _counterController = new CounterController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,17 +24,20 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'You',
             ),
-            Text(
-              _counterController.counter.toString(),
-              style: Theme.of(context).textTheme.headline4,
+            Consumer<CounterController>(
+              builder: (context, counterProvider, child) {
+                return Text(
+                  counterProvider.counter.toString(),
+                  style: Theme.of(context).textTheme.headline1,
+                );
+              },
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _counterController.increment();
-          setState(() {});
+          context.read<CounterController>().increment();
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './views/home.dart';
+import './controllers/counter.dart';
+import 'controllers/counter.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,9 +17,21 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+          headline1: TextStyle(
+            color: Colors.green,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Todo'),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => CounterController()),
+        ],
+        child: MyHomePage(title: 'Todo'),
+      ),
     );
   }
 }
